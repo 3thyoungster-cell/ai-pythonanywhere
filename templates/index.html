@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>琥珀健康飲食試算器 - 國健署指南版</title>
+  <title>琥珀健康飲食試算器 - 國健署黃金比例套餐版</title>
   <style>
     :root { 
       --ink: #17212b; 
@@ -15,7 +15,7 @@
       --orange-dark: #cf5120; 
       --mint: #dff1e9; 
       --mint-ink: #27644f; 
-      --card-bg: rgba(255, 253, 250, 0.92);
+      --card-bg: rgba(255, 253, 250, 0.94);
       --input-bg: #f1eee8;
       --tag-bean: #2e7d32;
       --tag-fish: #0288d1;
@@ -41,7 +41,7 @@
     }
     
     .calculator { 
-      width: min(100%, 560px); 
+      width: min(100%, 580px); 
       padding: 24px; 
       background: var(--card-bg); 
       border: 1px solid rgba(255, 255, 255, 0.85); 
@@ -69,7 +69,6 @@
       font-size: 12px; 
       font-weight: 600;
       cursor: pointer; 
-      transition: background 0.2s ease;
     }
 
     .subtitle-banner {
@@ -83,103 +82,44 @@
       font-weight: 500;
     }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .form-group {
-      margin-bottom: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { margin-bottom: 14px; display: flex; flex-direction: column; gap: 6px; }
     label { font-size: 13px; font-weight: 600; color: var(--ink); }
 
     input, select {
-      width: 100%;
-      min-height: 46px;
-      padding: 0 12px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--input-bg);
-      color: var(--ink);
-      font: inherit;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.2s ease;
+      width: 100%; min-height: 46px; padding: 0 12px;
+      border: 1px solid var(--line); border-radius: 14px;
+      background: var(--input-bg); color: var(--ink); font: inherit; font-size: 14px; outline: none;
     }
-
-    input:focus, select:focus { border-color: var(--orange); }
 
     .submit-btn {
-      width: 100%;
-      min-height: 52px;
-      margin-top: 8px;
-      border: 0;
-      border-radius: 16px;
-      color: #fff;
-      background: var(--orange);
-      font: inherit;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 8px 16px rgba(236, 107, 49, 0.24);
-      transition: transform 0.12s ease, background 0.12s ease;
+      width: 100%; min-height: 52px; margin-top: 8px; border: 0; border-radius: 16px;
+      color: #fff; background: var(--orange); font: inherit; font-size: 16px; font-weight: 700;
+      cursor: pointer; box-shadow: 0 8px 16px rgba(236, 107, 49, 0.24);
     }
 
-    .submit-btn:hover {
-      background: var(--orange-dark);
-      transform: translateY(-2px);
-    }
-
-    .msg-box {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: 14px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
+    .msg-box { margin-top: 16px; padding: 12px 16px; border-radius: 14px; font-size: 13px; line-height: 1.5; }
     .msg-box.error { background: #fde8e8; color: #c53030; border: 1px solid #feb2b2; }
     .msg-box.warning { background: #fffaf0; color: #9c4221; border: 1px solid #fbd38d; }
 
-    .hpa-six-card {
-      margin-top: 18px;
-      padding: 14px 16px;
-      background: rgba(39, 100, 79, 0.08);
-      border: 1px solid var(--mint-ink);
-      border-radius: 16px;
-      font-size: 12px;
-      line-height: 1.6;
-    }
-    .hpa-six-card h4 { margin: 0 0 6px 0; font-size: 13px; color: var(--mint-ink); }
-    .hpa-six-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 6px; text-align: center; }
-    .hpa-six-item { background: rgba(255, 255, 255, 0.6); padding: 6px 4px; border-radius: 8px; border: 1px solid var(--line); }
-
+    /* 國健署黃金比例首選卡片 */
     .recommend-screen {
-      margin-top: 20px;
-      padding: 18px;
-      border-radius: 20px;
-      background: var(--ink);
-      color: #fff;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+      margin-top: 20px; padding: 20px; border-radius: 20px;
+      background: var(--ink); color: #fff; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
     }
 
-    .recommend-title { font-size: 12px; color: #aab5bc; margin-bottom: 6px; letter-spacing: .05em; }
-    .recommend-name { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-    .recommend-meta { font-size: 13px; color: var(--mint-ink); margin-bottom: 12px; }
+    .recommend-title { font-size: 12px; color: #aab5bc; margin-bottom: 4px; }
+    .recommend-name { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .recommend-meta { font-size: 13px; color: var(--mint); margin-bottom: 14px; }
     
+    .six-group-box {
+      background: rgba(255, 255, 255, 0.08); padding: 12px 14px; border-radius: 14px;
+      font-size: 13px; line-height: 1.6; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
     .hpa-info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      font-size: 12px;
-      color: #d0d7de;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #d0d7de;
     }
 
     .results-area { margin-top: 20px; }
@@ -193,47 +133,36 @@
     .tag-豆 { background: #e8f5e9; color: var(--tag-bean); }
     .tag-魚 { background: #e1f5fe; color: var(--tag-fish); }
     .tag-蛋 { background: #fff3e0; color: var(--tag-egg); }
-    .tag-肉 { background: #ffebee; color: var(--tag-meat); }
+    .tag-蛋肉 { background: #ffebee; color: var(--tag-meat); }
     .tag-全穀 { background: #efebe9; color: var(--tag-grain); }
     .tag-蔬菜 { background: #e8f5e9; color: var(--tag-veg); }
 
     .hint { margin-top: 20px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.5; }
 
+    /* 深色模式優化 */
     .dark { 
-      --paper: #121921; 
-      --panel: #1e2933; 
-      --ink: #f0f4f8; 
-      --muted: #94a3b8; 
-      --line: #334155; 
-      --card-bg: rgba(30, 41, 51, 0.94);
-      --input-bg: #283542;
-      --mint: #1e3a30;
-      --mint-ink: #6ee7b7;
+      --paper: #121921; --panel: #1e2933; --ink: #f0f4f8; --muted: #94a3b8; 
+      --line: #334155; --card-bg: rgba(30, 41, 51, 0.94); --input-bg: #283542;
+      --mint: #1e3a30; --mint-ink: #6ee7b7;
     }
 
     .dark input, .dark select { color: #f8fafc; border-color: #475569; }
-    .dark .hpa-six-card { background: rgba(110, 231, 183, 0.08); border-color: #059669; }
-    .dark .hpa-six-item { background: rgba(30, 41, 51, 0.8); border-color: #334155; color: #cbd5e1; }
-    .dark .msg-box.error { background: #451212; color: #fca5a5; border-color: #991b1b; }
-    .dark .msg-box.warning { background: #45240f; color: #fde047; border-color: #854d0e; }
+    .dark .msg-box.error { background: #451212; color: #fca5a5; }
+    .dark .msg-box.warning { background: #45240f; color: #fde047; }
 
-    @media (max-width: 480px) { 
-      .form-row { grid-template-columns: 1fr; }
-      .calculator { padding: 18px; } 
-      .hpa-six-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } .calculator { padding: 18px; } }
   </style>
 </head>
 <body>
-  <main class="calculator" aria-label="琥珀健康飲食試算器">
+  <main class="calculator">
     <div class="top">
       <span class="brand">AMBER / DIET Guide</span>
       <button class="mode" id="theme" type="button">深色模式</button>
     </div>
 
     <div class="subtitle-banner">
-      🏛️ 衛生福利部國民健康署《每日飲食指南》六大類食物：<br>
-      全穀雜糧、豆魚蛋肉、乳品、蔬菜、水果、油脂與堅果種子
+      🏛️ 衛生福利部國民健康署《我的餐盤》：<br>
+      每餐 100% 包含六大類食物黃金比例套餐
     </div>
 
     <form method="POST" action="/">
@@ -259,18 +188,18 @@
       </div>
 
       <div class="form-group">
-        <label for="category">偏好飲食類型 (國健署指引導向)</label>
+        <label for="category">偏好主蛋白類別</label>
         <select id="category" name="category">
-          <option value="ALL">全部推薦（均勻涵蓋六大類）</option>
+          <option value="ALL">全部推薦（50 份國健署黃金套餐）</option>
           <option value="豆">🌿 豆類優先（植物蛋白、高纖無膽固醇）</option>
-          <option value="魚">🐟 魚類/海鮮（富含 Omega-3 不飽和脂肪酸）</option>
-          <option value="全穀">🌾 全穀雜糧（未精製為主、低 GI 穩定血糖）</option>
-          <option value="蔬菜">🥦 高纖蔬菜組合（富含植化素與維生素）</option>
-          <option value="蛋肉">🥚🥩 蛋肉補充（優質蛋白、白肉優先於紅肉）</option>
+          <option value="魚">🐟 魚類/海鮮（富含 Omega-3）</option>
+          <option value="蛋">🥚 雞蛋補充（優質完全蛋白）</option>
+          <option value="蛋肉">🥩 白肉/精瘦肉（白肉優先於紅肉）</option>
+          <option value="全穀">🌾 全穀/蔬食導向（未精製高纖）</option>
         </select>
       </div>
 
-      <button class="submit-btn" type="submit">🔍 開始計算與國健署指南對照</button>
+      <button class="submit-btn" type="submit">🔍 開始計算與國健署黃金比例對照</button>
     </form>
 
     {% if error_message %}
@@ -282,50 +211,48 @@
     {% endif %}
 
     {% if recommended_item %}
-      <section class="recommend-screen" aria-live="polite">
-        <div class="recommend-title">🎲 試算隨機首選餐點/組合</div>
+      <section class="recommend-screen">
+        <div class="recommend-title">🍱 試算隨機首選：國健署六大類黃金套餐</div>
         <div class="recommend-name">{{ recommended_item.name }}</div>
-        <div class="recommend-meta">包含六大類：{{ recommended_item.hpaGroup }} · 熱量 {{ recommended_item.calories }} kcal</div>
-        
+        <div class="recommend-meta">總熱量：{{ recommended_item.calories }} kcal | 蛋白：{{ recommended_item.protein }}g</div>
+
+        <div class="six-group-box">
+          <div style="font-weight:bold; margin-bottom:4px; color:var(--mint-ink);">🍱 六大類食物單餐黃金拆解：</div>
+          🌾 <b>全穀雜糧：</b> {{ recommended_item.hpa.grain }}<br>
+          🌿 <b>豆魚蛋肉：</b> {{ recommended_item.hpa.protein }}<br>
+          🥦 <b>蔬菜類：</b> {{ recommended_item.hpa.veg }}<br>
+          🍎 <b>水果類：</b> {{ recommended_item.hpa.fruit }}<br>
+          🥛 <b>乳品類：</b> {{ recommended_item.hpa.dairy }}<br>
+          🥜 <b>堅果種子：</b> {{ recommended_item.hpa.nuts }}
+        </div>
+
         <div class="hpa-info-grid">
-          <div>蛋白質份數：<br><strong style="color:#fff; font-size:14px;">{{ calc_data.protein_portion }} 份 (約 {{ recommended_item.protein }}g)</strong></div>
-          <div>占全天熱量目標：<br><strong style="color:var(--mint-ink); font-size:14px;">約全天需求 {{ calc_data.meal_tdee_ratio }}%</strong></div>
-          <div style="grid-column: span 2; padding-top:4px;">💡 國健署六大類指引：{{ recommended_item.tip }}</div>
+          <div>蛋白質相當於：<br><strong style="color:#fff; font-size:14px;">{{ calc_data.protein_portion }} 份</strong></div>
+          <div>占全天熱量目標：<br><strong style="color:var(--mint-ink); font-size:14px;">約 {{ calc_data.meal_tdee_ratio }}%</strong></div>
+          <div style="grid-column: span 2; padding-top:4px;">💡 <b>國健署評價：</b>{{ recommended_item.tip }}</div>
         </div>
       </section>
     {% endif %}
 
     {% if results %}
       <section class="results-area">
-        <div class="hpa-six-card">
-          <h4>🍱 國健署「我的餐盤」單餐黃金比例參考 (2000 kcal基準)</h4>
-          <div class="hpa-six-grid">
-            <div class="hpa-six-item">🌾 全穀雜糧<br><b>1.5 碗</b></div>
-            <div class="hpa-six-item">🌿 豆魚蛋肉<br><b>2 份</b></div>
-            <div class="hpa-six-item">🥦 蔬菜類<br><b>1 碗</b></div>
-            <div class="hpa-six-item">🍎 水果類<br><b>1 份 (拳頭大)</b></div>
-            <div class="hpa-six-item">🥛 乳品類<br><b>0.5 杯</b></div>
-            <div class="hpa-six-item">🥜 堅果種子<br><b>1 茶匙</b></div>
-          </div>
-        </div>
-
-        <div class="results-title" style="margin-top:16px;">📋 符合熱量條件的外食組合 (共 {{ results|length }} 筆)</div>
+        <div class="results-title">📋 符合條件的黃金比例套餐 (共 {{ results|length }} 筆)</div>
         <table>
           <thead>
             <tr>
-              <th>品名</th>
-              <th>分類</th>
+              <th>套餐名稱</th>
+              <th>主分類</th>
               <th>熱量</th>
-              <th>三大營養素 (碳水/蛋白質/脂肪)</th>
+              <th>三大營養素 (碳水/蛋白/脂)</th>
             </tr>
           </thead>
           <tbody>
             {% for item in results %}
             <tr>
-              <td><strong>{{ item.name }}</strong><br><small style="color:var(--muted);">{{ item.hpaGroup }}</small></td>
+              <td><strong>{{ item.name }}</strong><br><small style="color:var(--muted);">{{ item.hpa.protein }}</small></td>
               <td><span class="tag tag-{{ item.category }}">{{ item.category }}</span></td>
               <td>{{ item.calories }} kcal</td>
-              <td>碳水 {{ item.carbs }}g | 蛋白 {{ item.protein }}g | 脂肪 {{ item.fat }}g</td>
+              <td>碳水 {{ item.carbs }}g | 蛋白 {{ item.protein }}g | 脂 {{ item.fat }}g</td>
             </tr>
             {% endfor %}
           </tbody>
