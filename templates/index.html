@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>琥珀健康飲食試算器 - 國健署黃金比例套餐版</title>
+  <title>琥珀健康飲食試算器 - 國健署黃金套餐專區</title>
   <style>
     :root { 
       --ink: #17212b; 
@@ -32,7 +32,7 @@
       min-height: 100vh; 
       display: grid; 
       place-items: center; 
-      padding: 28px 16px; 
+      padding: 24px 16px; 
       color: var(--ink); 
       background: radial-gradient(circle at 16% 12%, #f9d9bf 0 9%, transparent 30%), 
                   radial-gradient(circle at 86% 88%, #cce9da 0 9%, transparent 32%), 
@@ -41,8 +41,8 @@
     }
     
     .calculator { 
-      width: min(100%, 580px); 
-      padding: 24px; 
+      width: min(100%, 480px); 
+      padding: 22px; 
       background: var(--card-bg); 
       border: 1px solid rgba(255, 255, 255, 0.85); 
       border-radius: 28px; 
@@ -50,107 +50,86 @@
       backdrop-filter: blur(12px); 
     }
     
-    .top { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      margin-bottom: 16px; 
-    }
-    
+    .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
     .brand { font-size: 14px; letter-spacing: .12em; font-weight: 700; }
     
     .mode { 
-      border: 0; 
-      border-radius: 999px; 
-      padding: 8px 14px; 
-      color: var(--mint-ink); 
-      background: var(--mint); 
-      font: inherit; 
-      font-size: 12px; 
-      font-weight: 600;
-      cursor: pointer; 
+      border: 0; border-radius: 999px; padding: 6px 12px; color: var(--mint-ink); 
+      background: var(--mint); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; 
     }
 
     .subtitle-banner {
-      background: var(--mint);
-      color: var(--mint-ink);
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 12px;
-      line-height: 1.5;
-      margin-bottom: 18px;
-      font-weight: 500;
+      background: var(--mint); color: var(--mint-ink); padding: 8px 12px;
+      border-radius: 12px; font-size: 12px; line-height: 1.4; margin-bottom: 16px; font-weight: 500;
     }
 
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .form-group { margin-bottom: 14px; display: flex; flex-direction: column; gap: 6px; }
-    label { font-size: 13px; font-weight: 600; color: var(--ink); }
+    /* 計算機樣式顯示螢幕 */
+    .calc-display-panel {
+      background: var(--ink); color: #fff; padding: 14px; border-radius: 18px; margin-bottom: 14px;
+    }
 
-    input, select {
-      width: 100%; min-height: 46px; padding: 0 12px;
-      border: 1px solid var(--line); border-radius: 14px;
-      background: var(--input-bg); color: var(--ink); font: inherit; font-size: 14px; outline: none;
+    .display-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .display-label { font-size: 12px; color: #aab5bc; }
+    
+    .display-value {
+      font-size: 20px; font-weight: 700; color: #fff; background: rgba(255,255,255,0.1);
+      padding: 4px 12px; border-radius: 8px; cursor: pointer; border: 1px solid transparent;
+    }
+    .display-value.active { border-color: var(--orange); color: var(--orange); }
+
+    /* 計算機鍵盤 */
+    .calc-keypad {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px;
+    }
+
+    .calc-btn {
+      min-height: 44px; border: 0; border-radius: 12px; background: var(--input-bg);
+      color: var(--ink); font-size: 16px; font-weight: 600; cursor: pointer;
+    }
+    .calc-btn:active { transform: translateY(1px); }
+    .calc-btn.op { background: #ffe8dc; color: var(--orange-dark); }
+
+    select {
+      width: 100%; min-height: 44px; padding: 0 12px; border: 1px solid var(--line);
+      border-radius: 12px; background: var(--input-bg); color: var(--ink); font: inherit; font-size: 14px; margin-bottom: 12px;
     }
 
     .submit-btn {
-      width: 100%; min-height: 52px; margin-top: 8px; border: 0; border-radius: 16px;
+      width: 100%; min-height: 48px; border: 0; border-radius: 14px;
       color: #fff; background: var(--orange); font: inherit; font-size: 16px; font-weight: 700;
-      cursor: pointer; box-shadow: 0 8px 16px rgba(236, 107, 49, 0.24);
+      cursor: pointer; box-shadow: 0 6px 14px rgba(236, 107, 49, 0.24);
     }
 
-    .msg-box { margin-top: 16px; padding: 12px 16px; border-radius: 14px; font-size: 13px; line-height: 1.5; }
-    .msg-box.error { background: #fde8e8; color: #c53030; border: 1px solid #feb2b2; }
-    .msg-box.warning { background: #fffaf0; color: #9c4221; border: 1px solid #fbd38d; }
+    .msg-box { margin-top: 14px; padding: 10px 14px; border-radius: 12px; font-size: 13px; }
+    .msg-box.error { background: #fde8e8; color: #c53030; }
+    .msg-box.warning { background: #fffaf0; color: #9c4221; }
 
-    /* 國健署黃金比例首選卡片 */
+    /* 單一套餐深度分析卡片 */
     .recommend-screen {
-      margin-top: 20px; padding: 20px; border-radius: 20px;
-      background: var(--ink); color: #fff; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+      margin-top: 18px; padding: 18px; border-radius: 20px; background: var(--ink); color: #fff;
     }
-
     .recommend-title { font-size: 12px; color: #aab5bc; margin-bottom: 4px; }
-    .recommend-name { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .recommend-meta { font-size: 13px; color: var(--mint); margin-bottom: 14px; }
-    
-    .six-group-box {
-      background: rgba(255, 255, 255, 0.08); padding: 12px 14px; border-radius: 14px;
-      font-size: 13px; line-height: 1.6; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.12);
+    .recommend-name { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .recommend-meta { font-size: 13px; color: var(--mint); margin-bottom: 12px; }
+
+    .hpa-detail-list {
+      background: rgba(255, 255, 255, 0.08); padding: 12px; border-radius: 12px;
+      font-size: 13px; line-height: 1.7; margin-bottom: 12px;
     }
 
     .hpa-info-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 10px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding-top: 10px;
       border-top: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; color: #d0d7de;
     }
 
-    .results-area { margin-top: 20px; }
-    .results-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+    .hint { margin-top: 16px; color: var(--muted); font-size: 12px; text-align: center; }
 
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    th, td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--line); }
-    th { color: var(--muted); font-weight: 600; }
-
-    .tag { padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
-    .tag-豆 { background: #e8f5e9; color: var(--tag-bean); }
-    .tag-魚 { background: #e1f5fe; color: var(--tag-fish); }
-    .tag-蛋 { background: #fff3e0; color: var(--tag-egg); }
-    .tag-蛋肉 { background: #ffebee; color: var(--tag-meat); }
-    .tag-全穀 { background: #efebe9; color: var(--tag-grain); }
-    .tag-蔬菜 { background: #e8f5e9; color: var(--tag-veg); }
-
-    .hint { margin-top: 20px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.5; }
-
-    /* 深色模式優化 */
     .dark { 
-      --paper: #121921; --panel: #1e2933; --ink: #f0f4f8; --muted: #94a3b8; 
-      --line: #334155; --card-bg: rgba(30, 41, 51, 0.94); --input-bg: #283542;
-      --mint: #1e3a30; --mint-ink: #6ee7b7;
+      --paper: #121921; --ink: #f0f4f8; --muted: #94a3b8; --line: #334155; 
+      --card-bg: rgba(30, 41, 51, 0.94); --input-bg: #283542; --mint: #1e3a30; --mint-ink: #6ee7b7;
     }
-
-    .dark input, .dark select { color: #f8fafc; border-color: #475569; }
-    .dark .msg-box.error { background: #451212; color: #fca5a5; }
-    .dark .msg-box.warning { background: #45240f; color: #fde047; }
-
-    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } .calculator { padding: 18px; } }
+    .dark .calc-btn { color: #f8fafc; }
+    .dark select { color: #f8fafc; }
   </style>
 </head>
 <body>
@@ -161,45 +140,66 @@
     </div>
 
     <div class="subtitle-banner">
-      🏛️ 衛生福利部國民健康署《我的餐盤》：<br>
-      每餐 100% 包含六大類食物黃金比例套餐
+      🏛️ 衛福部國健署《我的餐盤》：<br>
+      計算機輸入體重與熱量，試算 100% 涵蓋六大類之單一套餐
     </div>
 
-    <form method="POST" action="/">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="weight">體重 (kg)</label>
-          <input type="number" id="weight" name="weight" value="60" min="30" max="200" required>
+    <form method="POST" action="/" id="calcForm">
+      <!-- 隱藏表單欄位 -->
+      <input type="hidden" name="weight" id="hidden_weight" value="60">
+      <input type="hidden" name="calories" id="hidden_calories" value="600">
+
+      <!-- 計算機數值顯示螢幕 -->
+      <div class="calc-display-panel">
+        <div class="display-row">
+          <span class="display-label">⚖️ 體重 (kg)：</span>
+          <span class="display-value active" id="disp_weight" onclick="setActiveField('weight')">60</span>
         </div>
-        <div class="form-group">
-          <label for="activity">每日活動強度 (TDEE)</label>
-          <select id="activity" name="activity">
-            <option value="1.2">久坐/辦公室族群 (x 1.2)</option>
-            <option value="1.375">輕度運動/每週1-3天 (x 1.375)</option>
-            <option value="1.55">中度運動/每週3-5天 (x 1.55)</option>
-            <option value="1.725">🏋️ 重度運動/高強度訓練 (x 1.725)</option>
-          </select>
+        <div class="display-row">
+          <span class="display-label">🔥 單餐熱量目標 (kcal)：</span>
+          <span class="display-value" id="disp_calories" onclick="setActiveField('calories')">600</span>
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="calories">單餐熱量目標 (kcal)</label>
-        <input type="number" id="calories" name="calories" placeholder="例如：600" min="1" required>
+      <!-- 計算機軟體鍵盤 -->
+      <div class="calc-keypad">
+        <button type="button" class="calc-btn" onclick="pressNum('1')">1</button>
+        <button type="button" class="calc-btn" onclick="pressNum('2')">2</button>
+        <button type="button" class="calc-btn" onclick="pressNum('3')">3</button>
+        <button type="button" class="calc-btn" onclick="pressNum('4')">4</button>
+        <button type="button" class="calc-btn" onclick="pressNum('5')">5</button>
+        <button type="button" class="calc-btn" onclick="pressNum('6')">6</button>
+        <button type="button" class="calc-btn" onclick="pressNum('7')">7</button>
+        <button type="button" class="calc-btn" onclick="pressNum('8')">8</button>
+        <button type="button" class="calc-btn" onclick="pressNum('9')">9</button>
+        <button type="button" class="calc-btn op" onclick="clearField()">AC</button>
+        <button type="button" class="calc-btn" onclick="pressNum('0')">0</button>
+        <button type="button" class="calc-btn op" onclick="backspace()">⌫</button>
       </div>
 
-      <div class="form-group">
-        <label for="category">偏好主蛋白類別</label>
-        <select id="category" name="category">
-          <option value="ALL">全部推薦（50 份國健署黃金套餐）</option>
-          <option value="豆">🌿 豆類優先（植物蛋白、高纖無膽固醇）</option>
-          <option value="魚">🐟 魚類/海鮮（富含 Omega-3）</option>
-          <option value="蛋">🥚 雞蛋補充（優質完全蛋白）</option>
-          <option value="蛋肉">🥩 白肉/精瘦肉（白肉優先於紅肉）</option>
-          <option value="全穀">🌾 全穀/蔬食導向（未精製高纖）</option>
+      <div style="margin-bottom:8px;">
+        <label style="font-size:12px; font-weight:600;">每日活動強度 (TDEE)：</label>
+        <select name="activity" id="activity">
+          <option value="1.2">久坐族群 (x 1.2)</option>
+          <option value="1.375">輕度運動 (x 1.375)</option>
+          <option value="1.55">中度運動 (x 1.55)</option>
+          <option value="1.725">🏋️ 重度運動 (x 1.725)</option>
         </select>
       </div>
 
-      <button class="submit-btn" type="submit">🔍 開始計算與國健署黃金比例對照</button>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:12px; font-weight:600;">偏好蛋白質來源：</label>
+        <select name="category" id="category">
+          <option value="ALL">全部推薦 (50 份國健署黃金套餐)</option>
+          <option value="豆">🌿 豆類優先 (植物蛋白高纖)</option>
+          <option value="魚">🐟 魚類/海鮮 (富含 Omega-3)</option>
+          <option value="蛋">🥚 雞蛋補充 (優質完全蛋白)</option>
+          <option value="蛋肉">🥩 白肉/精瘦肉 (低脂好吸收)</option>
+          <option value="全穀">🌾 全穀/蔬食導向 (未精製低 GI)</option>
+        </select>
+      </div>
+
+      <button class="submit-btn" type="submit">🔍 計算並輸出單一黃金套餐</button>
     </form>
 
     {% if error_message %}
@@ -210,14 +210,15 @@
       <div class="msg-box warning">⚠️ {{ warning_message }}</div>
     {% endif %}
 
+    <!-- 僅展示【單一】詳細解析套餐卡片 -->
     {% if recommended_item %}
       <section class="recommend-screen">
-        <div class="recommend-title">🍱 試算隨機首選：國健署六大類黃金套餐</div>
+        <div class="recommend-title">🍱 國健署單餐黃金比例：完美推薦套餐</div>
         <div class="recommend-name">{{ recommended_item.name }}</div>
-        <div class="recommend-meta">總熱量：{{ recommended_item.calories }} kcal | 蛋白：{{ recommended_item.protein }}g</div>
+        <div class="recommend-meta">熱量：{{ recommended_item.calories }} kcal | 蛋白：{{ recommended_item.protein }}g | 碳水：{{ recommended_item.carbs }}g | 脂肪：{{ recommended_item.fat }}g</div>
 
-        <div class="six-group-box">
-          <div style="font-weight:bold; margin-bottom:4px; color:var(--mint-ink);">🍱 六大類食物單餐黃金拆解：</div>
+        <div class="hpa-detail-list">
+          <div style="font-weight:bold; margin-bottom:6px; color:var(--mint-ink);">🍱 六大類食物單餐黃金比例拆解：</div>
           🌾 <b>全穀雜糧：</b> {{ recommended_item.hpa.grain }}<br>
           🌿 <b>豆魚蛋肉：</b> {{ recommended_item.hpa.protein }}<br>
           🥦 <b>蔬菜類：</b> {{ recommended_item.hpa.veg }}<br>
@@ -227,43 +228,56 @@
         </div>
 
         <div class="hpa-info-grid">
-          <div>蛋白質相當於：<br><strong style="color:#fff; font-size:14px;">{{ calc_data.protein_portion }} 份</strong></div>
-          <div>占全天熱量目標：<br><strong style="color:var(--mint-ink); font-size:14px;">約 {{ calc_data.meal_tdee_ratio }}%</strong></div>
+          <div>蛋白質折合：<br><strong style="color:#fff; font-size:14px;">{{ calc_data.protein_portion }} 份</strong></div>
+          <div>占單餐熱量目標：<br><strong style="color:var(--mint-ink); font-size:14px;">約 {{ calc_data.meal_tdee_ratio }}%</strong></div>
           <div style="grid-column: span 2; padding-top:4px;">💡 <b>國健署評價：</b>{{ recommended_item.tip }}</div>
         </div>
+
+        <button type="button" onclick="document.getElementById('calcForm').submit();" style="width:100%; margin-top:12px; background:var(--mint); color:var(--mint-ink); border:0; padding:8px; border-radius:10px; font-weight:700; cursor:pointer;">🎲 換試另一份符合條件的套餐</button>
       </section>
     {% endif %}
 
-    {% if results %}
-      <section class="results-area">
-        <div class="results-title">📋 符合條件的黃金比例套餐 (共 {{ results|length }} 筆)</div>
-        <table>
-          <thead>
-            <tr>
-              <th>套餐名稱</th>
-              <th>主分類</th>
-              <th>熱量</th>
-              <th>三大營養素 (碳水/蛋白/脂)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in results %}
-            <tr>
-              <td><strong>{{ item.name }}</strong><br><small style="color:var(--muted);">{{ item.hpa.protein }}</small></td>
-              <td><span class="tag tag-{{ item.category }}">{{ item.category }}</span></td>
-              <td>{{ item.calories }} kcal</td>
-              <td>碳水 {{ item.carbs }}g | 蛋白 {{ item.protein }}g | 脂 {{ item.fat }}g</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </section>
-    {% endif %}
-
-    <p class="hint">參考資料：衛福部國民健康署《每日飲食指南手冊》<br>三大營養素比例：碳水 50-60%、蛋白質 10-20%、脂質 20-30%</p>
+    <p class="hint">依據衛福部國民健康署《每日飲食指南手冊》<br>三大營養素比例：碳水 50-60%、蛋白質 10-20%、脂質 20-30%</p>
   </main>
 
   <script>
+    let activeField = 'weight'; // 預設輸入對象：weight 或 calories
+
+    function setActiveField(field) {
+      activeField = field;
+      document.getElementById('disp_weight').classList.remove('active');
+      document.getElementById('disp_calories').classList.remove('active');
+      document.getElementById('disp_' + field).classList.add('active');
+    }
+
+    function pressNum(num) {
+      const disp = document.getElementById('disp_' + activeField);
+      const hidden = document.getElementById('hidden_' + activeField);
+      
+      if (disp.textContent === '0') {
+        disp.textContent = num;
+      } else if (disp.textContent.length < 5) {
+        disp.textContent += num;
+      }
+      hidden.value = disp.textContent;
+    }
+
+    function clearField() {
+      document.getElementById('disp_' + activeField).textContent = '0';
+      document.getElementById('hidden_' + activeField).value = '0';
+    }
+
+    function backspace() {
+      const disp = document.getElementById('disp_' + activeField);
+      const hidden = document.getElementById('hidden_' + activeField);
+      if (disp.textContent.length > 1) {
+        disp.textContent = disp.textContent.slice(0, -1);
+      } else {
+        disp.textContent = '0';
+      }
+      hidden.value = disp.textContent;
+    }
+
     document.querySelector('#theme').addEventListener('click', event => {
       document.body.classList.toggle('dark');
       const isDark = document.body.classList.contains('dark');
